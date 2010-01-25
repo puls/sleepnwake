@@ -10,14 +10,14 @@ end if
 delay timeToWakeUp - (current date)
 tell application "iTunes"
 	set podcastPlaylist to the playlist "Podcasts"
-	set partyShuffle to the playlist "iTunes DJ"
+	set iTunesDJ to the playlist "iTunes DJ"
 	updatePodcast (first track of podcastPlaylist whose album is podcastToUse)
 	set finishedUpdating to false
 	repeat while finishedUpdating is false
 		try
 			set newTrack to the first track of podcastPlaylist whose album is podcastToUse and date added is greater than ((current date) - 12 * hours)
 			set finishedUpdating to true
-			set trackOnPlaylist to duplicate (a reference to newTrack) to partyShuffle
+			set trackOnPlaylist to duplicate (a reference to newTrack) to iTunesDJ
 			
 			set theDate to current date
 			set theTime to time string of theDate
@@ -25,7 +25,7 @@ tell application "iTunes"
 			set timeString to text 1 through (firstColon + 2) of theTime & text (firstColon + 6) through end of theTime
 			say "Good morning. Today is  " & date string of theDate & "; the time is " & timeString
 			
-			tell partyShuffle to play trackOnPlaylist
+			tell iTunesDJ to play trackOnPlaylist
 		on error the errorMessage
 			set finishedUpdating to false
 			delay 10
